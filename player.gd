@@ -1,4 +1,6 @@
 extends Area2D
+# Un signal permet au joueur d'envoyer un message lorsqu'il entre en collision avec quelque chose
+signal hit
 
 # L'instruction @export crée une variable et l'affiche dans l'inspecteur
 @export var speed = 400
@@ -8,6 +10,8 @@ var screen_size
 func _ready():
 	# Récupérer les dimensions de la fenêtre de jeu
 	screen_size = get_viewport_rect().size
+	# Cacher le joueur au départ
+	hide()
 	
 
 func _process(delta):
@@ -55,3 +59,19 @@ func _process(delta):
 		$AnimatedSprite2D.animation = "up"
 		
 		
+
+
+func _on_body_entered(body: Node2D) -> void:
+	# Code en cas de collision avec une entité
+	hide() # On fait disparaître le joueur s'il est touché
+	hit.emit() # Émettre le signal "hit"
+	# La méthode set_deferred() permet de désactiver le noeud quand on n'en a plus besoin.
+	$CollisionShape2D.set_deferred("disabled", true) # Désactiver la boîte de collision du joueur
+
+
+# Fonction d'initialisation du joueur
+func start(pos):
+	# Position de départ du joueur
+	position = pos
+	show() # Afficher le joueur
+	$CollisionShape2D.disabled = false # Activer la boîte de collision du joueur
