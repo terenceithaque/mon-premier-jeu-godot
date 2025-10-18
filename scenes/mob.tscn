@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0ec7oxxxm7l0"]
+
+[ext_resource type="Script" uid="uid://6l7m845ttgrg" path="res://scenes/Mob.gd" id="1_ebxvl"]
+[ext_resource type="Texture2D" uid="uid://rnka8vcr7koy" path="res://art/enemyFlyingAlt_1.png" id="2_wpivu"]
+[ext_resource type="Texture2D" uid="uid://cst03moeb2on6" path="res://art/enemyFlyingAlt_2.png" id="3_nao87"]
+[ext_resource type="Texture2D" uid="uid://bbxmjgi8yv0pf" path="res://art/enemyWalking_1.png" id="4_i71wu"]
+[ext_resource type="Texture2D" uid="uid://bbr5f65en7308" path="res://art/enemyWalking_2.png" id="5_m0xve"]
+[ext_resource type="Texture2D" uid="uid://dj5065s2outnc" path="res://art/enemySwimming_1.png" id="6_m0elm"]
+[ext_resource type="Texture2D" uid="uid://cps0qertqcdfn" path="res://art/enemySwimming_2.png" id="7_fla60"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3yqyl"]
+radius = 4.6
+height = 18.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xaro"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wpivu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_nao87")
+}],
+"loop": true,
+"name": &"ghost",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_i71wu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m0xve")
+}],
+"loop": true,
+"name": &"skeleton",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_m0elm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_fla60")
+}],
+"loop": true,
+"name": &"slime",
+"speed": 5.0
+}]
+
+[node name="Mob" type="RigidBody2D"]
+scale = Vector2(5, 5)
+script = ExtResource("1_ebxvl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.19999999, 0.39999998)
+shape = SubResource("CapsuleShape2D_3yqyl")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="CollisionShape2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D/VisibleOnScreenNotifier2D"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_7xaro")
+animation = &"skeleton"
+
+[connection signal="screen_exited" from="CollisionShape2D/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
