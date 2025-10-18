@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://b0ec7oxxxm7l0"]
 
-[ext_resource type="Script" uid="uid://6l7m845ttgrg" path="res://scenes/Mob.gd" id="1_ebxvl"]
+[ext_resource type="Script" path="res://scenes/Mob.gd" id="1_ebxvl"]
 [ext_resource type="Texture2D" uid="uid://rnka8vcr7koy" path="res://art/enemyFlyingAlt_1.png" id="2_wpivu"]
 [ext_resource type="Texture2D" uid="uid://cst03moeb2on6" path="res://art/enemyFlyingAlt_2.png" id="3_nao87"]
 [ext_resource type="Texture2D" uid="uid://bbxmjgi8yv0pf" path="res://art/enemyWalking_1.png" id="4_i71wu"]
@@ -60,7 +60,8 @@ shape = SubResource("CapsuleShape2D_3yqyl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D/VisibleOnScreenNotifier2D"]
 texture_filter = 1
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_7xaro")
-animation = &"skeleton"
+animation = &"slime"
 
 [connection signal="screen_exited" from="CollisionShape2D/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
